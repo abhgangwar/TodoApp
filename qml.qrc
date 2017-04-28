@@ -5,5 +5,7 @@
         <file>TaskLayout.qml</file>
         <file>TaskModel.qml</file>
         <file>TaskView.qml</file>
+        <file>AddItem.qml</file>
+        <file>resources/ic_add_black_48px.svg</file>
     </qresource>
 </RCC>
