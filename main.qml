@@ -29,7 +29,9 @@ ApplicationWindow {
         id: tasks
         taskViewWidth: mainWindow.width
         taskViewHeight: mainWindow.height
+        anchors.centerIn: parent
         spacing: 5
+        anchors.leftMargin: 50
         
         model: taskModel
     }

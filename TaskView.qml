@@ -13,5 +13,9 @@ ListView {
         taskWidth: taskViewWidth
         taskHeight: taskViewHeight/7
         taskDetails: details
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        anchors.right: parent.right
+        anchors.rightMargin: 10
     }
 }
