@@ -3,11 +3,13 @@ import QtQuick.Controls 2.1
 import QtQuick.Controls.Styles 1.4
 
 CheckBox {
-    property int taskWidth: 500
-    property int taskHeight: 100
+    property alias taskWidth: checkBox.width
+    property alias taskHeight: checkBox.height
+    property alias taskDetails: checkBox.text
+
     id: checkBox
-    width: taskWidth
-    height: taskHeight
+    width: 500
+    height: 100
     text: "Sample Text"
     checked: false
     indicator: Rectangle {
@@ -32,17 +34,17 @@ CheckBox {
     background: Rectangle {
         id: checkBoxBackground
         anchors.fill: parent
-        color: "#696969"
-        radius: 3*parent.height/2
+        color: "#CCCCCC"
+//         radius: 3*parent.height/2
     }
 
     contentItem: Text {
-            text: checkBox.text
-            font: checkBox.font
-            opacity: enabled ? 1.0 : 0.3
-            color: "#000000" // checkBox.down ? "#17a81a" : "#21be2b"
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            leftPadding: checkBox.indicator.width + checkBox.spacing
-        }
+        text: checkBox.text
+        font: checkBox.font
+        opacity: enabled ? 1.0 : 0.3
+        color: "#000000" // checkBox.down ? "#17a81a" : "#21be2b"
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        leftPadding: checkBox.indicator.width + checkBox.spacing
+    }
 }

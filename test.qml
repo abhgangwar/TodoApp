@@ -2,13 +2,14 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 
-Rectangle {
+ApplicationWindow {
     id: frame
-    clip: true
+//     clip: true
     width: 160
     height: 160
-    border.color: "black"
-    anchors.centerIn: parent
+    color: "#696969"
+//     border.color: "black"
+//     anchors.centerIn: parent
 
     Text {
         id: content
@@ -16,6 +17,15 @@ Rectangle {
         font.pixelSize: 160
         x: -hbar.position * width
         y: -vbar.position * height
+    }
+    
+    Keys.onUpPressed: {
+      console.log("Up pressed");
+      vbar.decrease();
+    }
+    Keys.onDownPressed: {
+      console.log("Down pressed");
+      vbar.increase()
     }
 
     Flickable {

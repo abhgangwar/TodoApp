@@ -8,95 +8,40 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Todo App")
+    color: "#191919"
 
-    property int taskLayoutHeight: mainWindow.height/6
+    property int taskLayoutHeight: mainWindow.height/7
     property int taskLayoutWidth: mainWindow.width
 
     Flickable {
-        id: flickable
-        clip: true
-        focus: true
-
-        Keys.onUpPressed: scrollBar.decrease()
-        Keys.onDownPressed: scrollBar.increase()
-        ScrollBar.vertical: ScrollBar {
-            id: scrollBar
-            parent: flickable.parent
-            anchors.top: flickable.top
-            anchors.left: flickable.right
-            anchors.bottom: flickable.bottom
-        }
+      anchors.fill: parent
+      
+      contentWidth: parent.width *2 
+      contentHeight: parent.height *2
+      Keys.onUpPressed: vbar.decrease()
+      Keys.onDownPressed: vbar.increase()
+      
+      ScrollBar.horizontal: ScrollBar { id: hbar; active: vbar.active }
+      ScrollBar.vertical: ScrollBar { id: vbar; active: hbar.active }
     }
-
-    Column {
-        id: taskContainer
-        leftPadding: 10
-        rightPadding: 10
+    
+    TaskView {
+        id: tasks
+        taskViewWidth: mainWindow.width
+        taskViewHeight: mainWindow.height
         spacing: 5
-        anchors.fill: parent
-
-        TaskLayout {
-            id: task1
-            taskHeight: taskLayoutHeight
-            taskWidth: taskLayoutWidth
-        }
-
-        TaskLayout {
-            id: task2
-            taskHeight: taskLayoutHeight
-            taskWidth: taskLayoutWidth
-        }
-
-        TaskLayout {
-            id: task3
-            taskHeight: taskLayoutHeight
-            taskWidth: taskLayoutWidth
-        }
-
-        TaskLayout {
-            id: task4
-            taskHeight: taskLayoutHeight
-            taskWidth: taskLayoutWidth
-        }
-
-        TaskLayout {
-            id: task5
-            taskHeight: taskLayoutHeight
-            taskWidth: taskLayoutWidth
-        }
-
-        TaskLayout {
-            id: task6
-            taskHeight: taskLayoutHeight
-            taskWidth: taskLayoutWidth
+        
+        model: taskModel
+    }
+    
+    TaskModel {
+        id: taskModel
+    }
+    
+    Component.onCompleted: {
+        console.log("Component done");
+        for(var i=0; i<10; ++i) {
+            taskModel.append({details: "Sample Task " + (i+1).toString()});
         }
     }
-
-//    SwipeView {
-//        id: swipeView
-//        anchors.fill: parent
-//        currentIndex: tabBar.currentIndex
-
-////        Page1 {
-
-////        }
-
-//        Page {
-//            Label {
-//                text: qsTr("Second page")
-//                anchors.centerIn: parent
-//            }
-//        }
-//    }
-
-//    footer: TabBar {
-//        id: tabBar
-//        currentIndex: swipeView.currentIndex
-//        TabButton {
-//            text: qsTr("First")
-//        }
-//        TabButton {
-//            text: qsTr("Second")
-//        }
-//    }
 }
