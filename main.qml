@@ -24,25 +24,44 @@ ApplicationWindow {
       ScrollBar.horizontal: ScrollBar { id: hbar; active: vbar.active }
       ScrollBar.vertical: ScrollBar { id: vbar; active: hbar.active }
     }
+
+    TaskModel {
+        id: taskModel
+    }
     
     TaskView {
         id: tasks
         taskViewWidth: mainWindow.width
-        taskViewHeight: mainWindow.height
-        anchors.centerIn: parent
+        taskViewHeight: 6*mainWindow.height/7
+        anchors.top: parent.top
+        anchors.topMargin: 10
         spacing: 5
         anchors.leftMargin: 50
         
         model: taskModel
     }
-    
-    TaskModel {
-        id: taskModel
+
+//    Text {
+//        id: testT
+//        text: "Yo bro, what's up ?"
+//        anchors.top: tasks.bottom
+//        anchors.topMargin: 20
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        color: "yellow"
+//    }
+
+    AddItem {
+        id: addItem
+        anchors.top: tasks.bottom
+        anchors.topMargin: 20
+//        addItemWidth: mainWindow.width
+        anchors.horizontalCenter: parent.horizontalCenter
+//        addItemHeight: mainWindow.height/7
     }
     
     Component.onCompleted: {
         console.log("Component done");
-        for(var i=0; i<10; ++i) {
+        for(var i=0; i<3; ++i) {
             taskModel.append({details: "Sample Task " + (i+1).toString()});
         }
     }
