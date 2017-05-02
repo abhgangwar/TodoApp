@@ -11,6 +11,8 @@ Rectangle {
     width: 600
     height: 50
 
+    color: "#191919"
+
     CheckBox {
         id: checkBox
         width: 50
@@ -42,6 +44,7 @@ Rectangle {
         anchors.left: checkBox.right
         anchors.leftMargin: 10
         anchors.verticalCenter: parent.verticalCenter
+        color: "#ffffff"
         text: qsTr("Some sample task description")
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

@@ -9,13 +9,21 @@ ListView {
     id: taskView
     width: 200
     height: 500
+    highlightFollowsCurrentItem: true
+//    highlight: Rectangle {
+//        id: highlightStyle
+//        color: "yellow"
+//        anchors.fill: taskView
+//    }
+
     delegate: TaskLayout {
         taskWidth: taskViewWidth
         taskHeight: taskViewHeight/7
         taskDetails: details
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        anchors.right: parent.right
-        anchors.rightMargin: 10
+        color: "#191919"
+//        anchors.left: parent.left
+//        anchors.leftMargin: 10
+//        anchors.right: parent.right
+//        anchors.rightMargin: 10
     }
 }
