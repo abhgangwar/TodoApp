@@ -8,7 +8,7 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Todo App")
-    color: "#b2b2b2"
+    color: "#191919"
 
     property int taskLayoutHeight: mainWindow.height/7
     property int taskLayoutWidth: mainWindow.width
@@ -28,41 +28,43 @@ ApplicationWindow {
     TaskModel {
         id: taskModel
     }
+
+    header: Rectangle {
+        id: appHeader
+        width: taskLayoutWidth
+        height: taskLayoutHeight/2
+        color: "#191919"
+        Text {
+            text: "Todo - Get your tasks done"
+            color: "#ffffff"
+            anchors.centerIn: parent
+        }
+    }
     
     TaskView {
         id: tasks
         taskViewWidth: taskLayoutWidth
         taskViewHeight: 6*taskLayoutHeight
         anchors.top: parent.top
-//        anchors.topMargin: 10
-        spacing: 1
-        anchors.leftMargin: 50
-        
         model: taskModel
     }
 
+    footer: AddItem {
+        id: addItemF
+        width: taskLayoutWidth
+        height: taskLayoutHeight
 
-
-    AddItem {
-        id: addItem
-        anchors.top: tasks.bottom
-        anchors.topMargin: 20
-        addItemWidth: mainWindow.width/3
+        onTaskAdded: {
+            console.log("Data", taskDetails);
+            taskModel.append({details: taskDetails});
+        }
     }
     
     Component.onCompleted: {
         console.log("Component done");
-        var n = 10;
+        var n = 5;
         for(var i=0; i<n; ++i) {
             taskModel.append({details: "Sample Task " + (i+1).toString()});
         }
-        var originalHeight = taskLayoutHeight;
-        var optimumHeight = mainWindow.height;
-        if(n < 7) {
-            optimumHeight = (n+1)*mainWindow.height/7;
-        }
-        console.log("New optimum height: ", height);
-        mainWindow.height = optimumHeight;
-        taskLayoutHeight = originalHeight;
     }
 }
