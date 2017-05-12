@@ -1,2 +1,7 @@
 *.qmlc
 *pro.user*
+
+# Compiled object files
+*.o
+
+.qmake.stash

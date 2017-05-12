@@ -7,5 +7,8 @@
         <file>TaskView.qml</file>
         <file>AddItem.qml</file>
         <file>resources/ic_add_black_48px.svg</file>
+        <file>resources/ic_add_white_48px.svg</file>
+        <file>resources/ic_close_white_48px.svg</file>
+        <file>resources/ic_done_white_48px.svg</file>
     </qresource>
 </RCC>
