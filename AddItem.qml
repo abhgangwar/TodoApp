@@ -23,7 +23,7 @@ Rectangle {
 
     id: addItem
     width: 480
-    height: 640
+    height: 50
     color: "#191919"
     Image {
         id: addItemIcon
