@@ -12,7 +12,7 @@
 #include <QString>
 #include <QFile>
 #include <QTextStream>
-//#include <QDebug>
+#include <QDebug>
 
 FileActions::FileActions(QObject *parent)
     : QObject( parent )
@@ -50,6 +50,15 @@ void FileActions::saveContents()
     fOut.close();
 }
 
+void FileActions::addContents( QString contents) {
+    QFile fOut( m_source );
+    if( !fOut.open( QIODevice::WriteOnly | QIODevice::Append ) ) {
+        return;
+    }
+    QTextStream dataOut( &fOut );
+    dataOut << contents;
+    fOut.close();
+}
 
 QString FileActions::contents() const
 {
@@ -70,7 +79,8 @@ QString FileActions::source() const
 void FileActions::setSource( QString &source )
 {
     m_source = source;
+    readContents();
     emit sourceChanged( m_source );
 }
 
-#include "moc_FileActions.cpp"
+// #include "moc_FileActions.cpp"

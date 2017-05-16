@@ -26,6 +26,7 @@ public:
     explicit FileActions( QObject *parent = 0 );
 
     Q_INVOKABLE void saveContents();
+    Q_INVOKABLE void addContents(QString contents);
     QString contents() const;
     void setContents( QString &contents );
     QString source() const;
