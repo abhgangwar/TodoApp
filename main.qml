@@ -11,6 +11,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
+import FSBasics 1.0
 
 ApplicationWindow {
     id: mainWindow
@@ -37,6 +38,11 @@ ApplicationWindow {
 
     TaskModel {
         id: taskModel
+    }
+
+    FileActions {
+        id: fsBasics
+        source: "someTextFile.txt"
     }
 
     header: Rectangle {
@@ -67,14 +73,25 @@ ApplicationWindow {
         onTaskAdded: {
             console.log("Data", taskDetails);
             taskModel.append({details: taskDetails});
+            fsBasics.addContents(JSON.stringify({details: taskDetails}) + '\n');
         }
     }
     
     Component.onCompleted: {
         console.log("Component done");
-        var n = 5;
-        for(var i=0; i<n; ++i) {
-            taskModel.append({details: "Sample Task " + (i+1).toString()});
-        }
+//        var n = 5;
+//        for(var i=0; i<n; ++i) {
+//            var taskDetails = "Sample Task " + (i+1).toString();
+//            taskModel.append({details: taskDetails});
+//            fsBasics.addContents('\n' + JSON.stringify({details: taskDetails}));
+//        }
+        var data = fsBasics.contents;
+        console.log("Data is", data);
+        data = data.split('\n');
+        data.map(function (item) {
+            if(item) {
+                taskModel.append(JSON.parse(item));
+            }
+        });
     }
 }
