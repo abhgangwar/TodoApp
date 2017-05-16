@@ -18,23 +18,11 @@ ApplicationWindow {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Todo App")
-    color: "#191919"
+    title: qsTr("Todo App - Manage your tasks better")
+    color: "#ffffff"
 
     property int taskLayoutHeight: mainWindow.height/7
     property int taskLayoutWidth: mainWindow.width
-
-    Flickable {
-      anchors.fill: parent
-      
-      contentWidth: parent.width *2 
-      contentHeight: parent.height *2
-      Keys.onUpPressed: vbar.decrease()
-      Keys.onDownPressed: vbar.increase()
-      
-      ScrollBar.horizontal: ScrollBar { id: hbar; active: vbar.active }
-      ScrollBar.vertical: ScrollBar { id: vbar; active: hbar.active }
-    }
 
     TaskModel {
         id: taskModel
@@ -44,34 +32,40 @@ ApplicationWindow {
         id: fsBasics
         source: "someTextFile.txt"
     }
-
-    header: Rectangle {
-        id: appHeader
-        width: taskLayoutWidth
-        height: taskLayoutHeight/2
-        color: "#191919"
-        Text {
-            text: "Todo - Get your tasks done"
-            color: "#ffffff"
-            anchors.centerIn: parent
-        }
-    }
     
-    TaskView {
-        id: tasks
-        taskViewWidth: taskLayoutWidth
-        taskViewHeight: 6*taskLayoutHeight
+    Rectangle {
+        id: tasksContainer
+        width: taskLayoutWidth
         anchors.top: parent.top
-        model: taskModel
+        anchors.topMargin: 1
+        anchors.bottom: addItemF.top
+
+        Flickable {
+          anchors.fill: tasksContainer
+
+          contentWidth: tasksContainer.width *2
+          contentHeight: tasksContainer.height *2
+          Keys.onUpPressed: vbar.decrease()
+          Keys.onDownPressed: vbar.increase()
+
+          ScrollBar.horizontal: ScrollBar { id: hbar; active: vbar.active }
+          ScrollBar.vertical: ScrollBar { id: vbar; active: hbar.active }
+        }
+
+        TaskView {
+            id: tasks
+            taskViewWidth: parent.width
+            taskViewHeight: parent.height
+            model: taskModel
+        }
     }
 
     footer: AddItem {
         id: addItemF
-        width: taskLayoutWidth
-        height: taskLayoutHeight
+        addItemWidth: taskLayoutWidth
+        addItemHeight: taskLayoutHeight
 
         onTaskAdded: {
-            console.log("Data", taskDetails);
             taskModel.append({details: taskDetails});
             fsBasics.addContents(JSON.stringify({details: taskDetails}) + '\n');
         }
@@ -79,18 +73,17 @@ ApplicationWindow {
     
     Component.onCompleted: {
         console.log("Component done");
-//        var n = 5;
-//        for(var i=0; i<n; ++i) {
-//            var taskDetails = "Sample Task " + (i+1).toString();
-//            taskModel.append({details: taskDetails});
-//            fsBasics.addContents('\n' + JSON.stringify({details: taskDetails}));
-//        }
         var data = fsBasics.contents;
-        console.log("Data is", data);
         data = data.split('\n');
         data.map(function (item) {
             if(item) {
-                taskModel.append(JSON.parse(item));
+                var taskData;
+                try {
+                    taskData = JSON.parse(item);
+                    taskModel.append(taskData);
+                } catch (e) {
+                    console.log("Error while parsing task data");
+                }
             }
         });
     }
