@@ -11,7 +11,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtLocation 5.8
-import FSBasics 1.0
 
 Rectangle {
     property alias addItemWidth: addItem.width
@@ -98,11 +97,6 @@ Rectangle {
         }
     }
 
-    FileActions {
-        id: fsBasics
-        source: "someTextFile.txt"
-    }
-
     MouseArea {
         id: addItemArea
         anchors.fill: parent
@@ -114,12 +108,6 @@ Rectangle {
             console.log("h", addItem.height);
         }
         enabled: mouseAreaEnabled
-    }
-
-    Component.onCompleted: {
-        console.log("AddItem done");
-        fsBasics.contents = "SomeContents";
-        fsBasics.saveContents();
     }
 
     function createTask(taskDetails) {
